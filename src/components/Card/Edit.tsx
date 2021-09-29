@@ -1,10 +1,13 @@
 import { Formik, Form, FastField } from 'formik';
-import React from 'react';
-import { InputGroup, Input, FormGroup, Label, Col, Row, Button } from 'reactstrap';
+import React, { useState } from 'react';
+import { Row, Button, Alert, ButtonGroup } from 'reactstrap';
 import InputField from '../../custom-fields/InputField';
 import SelectField from '../../custom-fields/SelectField';
 import * as yup from 'yup';
-export interface EditCardProps {}
+export interface EditCardProps {
+	cancerEdit: () => any;
+	card: ICardDetail;
+}
 const CARD_OPTIONS = [
 	{ value: 'DATE', label: 'Thẻ ngày' },
 	{ value: 'MONTH', label: 'Thẻ tháng' },
@@ -19,14 +22,21 @@ const validationSchema = yup.object({
 		.oneOf(['DATE', 'MONTH', 'YEAR'], 'Loại thẻ không đúng')
 		.required('Vui lòng chọn loại thẻ'),
 });
-export default function EditCard(props: EditCardProps) {
+const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
+	const { card, cancerEdit } = props;
+	const { licence_plate, rfid, owner, status, type } = card;
+	const [isActive, setActive] = useState(status !== 'PENDING');
+	const handleActiveCard = () => {
+		setActive(true);
+		console.log('Active card');
+	};
 	return (
 		<Formik
 			initialValues={{
-				rfid: '',
-				licence_plate: '',
-				owner: '',
-				type: '',
+				rfid,
+				licence_plate,
+				owner,
+				type,
 			}}
 			onSubmit={(values, actions) => {
 				console.log(values);
@@ -41,6 +51,7 @@ export default function EditCard(props: EditCardProps) {
 						<Row>
 							<h4 className="m-auto"> Sửa thẻ </h4>
 						</Row>
+						{!isActive && <Alert color="danger">Thẻ chưa kích hoạt</Alert>}
 						<FastField
 							name="rfid"
 							component={InputField}
@@ -67,10 +78,25 @@ export default function EditCard(props: EditCardProps) {
 							placeholder="Chọn loại thẻ"
 							options={CARD_OPTIONS}
 						/>
-						<Button>Submit</Button>
+						<div className="text-center">
+							<ButtonGroup>
+								<Button type="submit" color="primary">
+									Lưu
+								</Button>
+								{!isActive && (
+									<Button type="button" color="success" onClick={handleActiveCard}>
+										Kích hoạt
+									</Button>
+								)}
+								<Button type="button" onClick={cancerEdit} color="danger">
+									Hủy
+								</Button>
+							</ButtonGroup>
+						</div>
 					</Form>
 				);
 			}}
 		</Formik>
 	);
-}
+};
+export default EditCard;

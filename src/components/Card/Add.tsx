@@ -1,10 +1,22 @@
 import { Formik, Form, FastField } from 'formik';
 import React from 'react';
-import { InputGroup, Input, FormGroup, Label, Col, Row, Button } from 'reactstrap';
+import {
+	InputGroup,
+	Input,
+	FormGroup,
+	Label,
+	Col,
+	Row,
+	Button,
+	ButtonGroup,
+	Alert,
+} from 'reactstrap';
 import InputField from '../../custom-fields/InputField';
 import SelectField from '../../custom-fields/SelectField';
 import * as yup from 'yup';
-export interface AddCardProps {}
+export interface AddCardProps {
+	cancerAdd: () => any;
+}
 const CARD_OPTIONS = [
 	{ value: 'DATE', label: 'Thẻ ngày' },
 	{ value: 'MONTH', label: 'Thẻ tháng' },
@@ -20,6 +32,7 @@ const validationSchema = yup.object({
 		.required('Vui lòng chọn loại thẻ'),
 });
 export default function AddCard(props: AddCardProps) {
+	const { cancerAdd } = props;
 	return (
 		<Formik
 			initialValues={{
@@ -30,6 +43,7 @@ export default function AddCard(props: AddCardProps) {
 			}}
 			onSubmit={(values, actions) => {
 				console.log(values);
+				actions.resetForm();
 			}}
 			validationSchema={validationSchema}
 		>
@@ -66,7 +80,16 @@ export default function AddCard(props: AddCardProps) {
 							placeholder="Chọn loại thẻ"
 							options={CARD_OPTIONS}
 						/>
-						<Button>Submit</Button>
+						<div className="text-center">
+							<ButtonGroup>
+								<Button type="submit" color="primary">
+									Lưu
+								</Button>
+								<Button type="button" onClick={cancerAdd} color="danger">
+									Hủy
+								</Button>
+							</ButtonGroup>
+						</div>
 					</Form>
 				);
 			}}

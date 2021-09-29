@@ -5,7 +5,7 @@ import CardStatus from './CardStatus';
 import CardType from './CardType';
 export interface ListCardProps {
 	cards: ICardDetail[];
-	setEdit: (edit: boolean) => void;
+	setEdit: (id: number) => void;
 }
 export default function ListCard(props: ListCardProps) {
 	const { cards, setEdit } = props;
@@ -23,8 +23,8 @@ export default function ListCard(props: ListCardProps) {
 				</tr>
 			</thead>
 			<tbody>
-				{cards.map((e) => (
-					<tr key={e.id}>
+				{cards.map((e, i) => (
+					<tr key={i}>
 						<th scope="row">{e.id}</th>
 						<td>{e.rfid}</td>
 						<td>{e.licence_plate}</td>
@@ -36,7 +36,7 @@ export default function ListCard(props: ListCardProps) {
 						</td>
 						<td>
 							<ButtonGroup>
-								<Button outline color="secondary" onClick={() => setEdit(true)}>
+								<Button outline color="secondary" onClick={() => setEdit(i)}>
 									Sửa
 								</Button>
 								<Button outline color="danger">
