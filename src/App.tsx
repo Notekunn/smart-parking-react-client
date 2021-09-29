@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import CardManager from './pages/Card';
+import CardManager from './features/Card/pages/CardManager';
 function App() {
 	return (
 		<div>

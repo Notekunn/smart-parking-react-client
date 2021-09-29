@@ -1,8 +1,8 @@
 import { Formik, Form, FastField } from 'formik';
 import React, { useState } from 'react';
 import { Row, Button, Alert, ButtonGroup } from 'reactstrap';
-import InputField from '../../custom-fields/InputField';
-import SelectField from '../../custom-fields/SelectField';
+import InputField from '../../../custom-fields/InputField';
+import SelectField from '../../../custom-fields/SelectField';
 import * as yup from 'yup';
 export interface EditCardProps {
 	cancerEdit: () => any;

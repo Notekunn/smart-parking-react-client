@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
-import AddCard from '../../components/Card/Add';
-import EditCard from '../../components/Card/Edit';
-import ListCard from '../../components/Card/ListCard';
+import AddCard from '../components/Add';
+import EditCard from '../components/Edit';
+import ListCard from '../components/ListCard';
 const CARD_LIST: ICardDetail[] = [
 	{
 		id: 1,
@@ -35,19 +35,21 @@ export default function CardManager() {
 		<div>
 			<Container>
 				<Row>
-					<Col xs="auto">
+					<Col xs={{ size: isAdd || editingID >= 0 ? '8' : '12' }}>
 						<Button onClick={() => setAdd(!isAdd)}>Thêm</Button>
 						<ListCard cards={cards} setEdit={toggleEdit} />
 					</Col>
-					<Col xs="4">
-						{isAdd && <AddCard cancerAdd={() => isAdd && setAdd(false)} />}
-						{editingID >= 0 && (
-							<EditCard
-								cancerEdit={() => editingID >= 0 && setEditingID(-1)}
-								card={cards[editingID]}
-							/>
-						)}
-					</Col>
+					{(isAdd || editingID >= 0) && (
+						<Col xs="4">
+							{isAdd && <AddCard cancerAdd={() => isAdd && setAdd(false)} />}
+							{editingID >= 0 && (
+								<EditCard
+									cancerEdit={() => editingID >= 0 && setEditingID(-1)}
+									card={cards[editingID]}
+								/>
+							)}
+						</Col>
+					)}
 				</Row>
 			</Container>
 		</div>
