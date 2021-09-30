@@ -19,7 +19,7 @@ type CardManagerProps = ConnectedProps<typeof connector>;
 const CardManager: React.FC<CardManagerProps> = (props) => {
 	const dispatch = useDispatch();
 	const { cards, loading, error } = props;
-	const [isAdd, setAdd] = useState(true);
+	const [isAdd, setAdd] = useState(false);
 	const [editingID, setEditingID] = useState(-1);
 	useEffect(() => {
 		dispatch(fetchCard());

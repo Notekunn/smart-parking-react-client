@@ -29,11 +29,10 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 	const error = useSelector(selectCardError);
 	const editLoading = useSelector(selectCardEditLoading);
 	const { card, cancerEdit } = props;
-	const { licencePlate, rfid, owner, status, type } = card;
-	const [isActive, setActive] = useState(status !== 'PENDING');
+	const { id, licencePlate, rfid, owner, status, type } = card;
 	const handleActiveCard = () => {
-		setActive(true);
-		console.log('Active card');
+		if (status !== 'PENDING') return;
+		dispatch(updateCard({ id, status: 'OUT' }));
 	};
 	if (editLoading === 'pending') return <div>Editing..</div>;
 	return (
@@ -48,10 +47,11 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 				dispatch(
 					updateCard({
 						...values,
-						id: card.id,
+						id,
 					})
 				);
 				actions.resetForm();
+				cancerEdit();
 			}}
 			validationSchema={validationSchema}
 		>
@@ -63,7 +63,7 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 							<h4 className="m-auto"> Sửa thẻ </h4>
 						</Row>
 						{editLoading === 'error' && <Alert color="danger">{error}</Alert>}
-						{!isActive && <Alert color="primary">Thẻ chưa kích hoạt</Alert>}
+						{status === 'PENDING' && <Alert color="primary">Thẻ chưa kích hoạt</Alert>}
 						<FastField
 							name="rfid"
 							component={InputField}
@@ -85,7 +85,7 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 								<Button type="submit" color="primary">
 									Lưu
 								</Button>
-								{!isActive && (
+								{status === 'PENDING' && (
 									<Button type="button" color="success" onClick={handleActiveCard}>
 										Kích hoạt
 									</Button>
