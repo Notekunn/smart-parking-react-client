@@ -20,6 +20,7 @@ export default function ListCard(props: ListCardProps) {
 					<th>#</th>
 					<th>Mã thẻ</th>
 					<th>Biển kiểm soát</th>
+					<th>Chủ phương tiện</th>
 					<th>Loại thẻ</th>
 					<th>Trạng thái</th>
 					<th>Action</th>
@@ -30,7 +31,8 @@ export default function ListCard(props: ListCardProps) {
 					<tr key={i}>
 						<th scope="row">{e.id}</th>
 						<td>{e.rfid}</td>
-						<td>{e.licence_plate}</td>
+						<td>{e.licencePlate}</td>
+						<td>{e.owner}</td>
 						<td>
 							<CardType type={e.type} />
 						</td>

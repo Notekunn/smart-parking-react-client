@@ -6,7 +6,7 @@ type ICardType = 'MONTH' | 'DATE' | 'MASTER';
 interface ICardDetail {
 	id: number;
 	rfid: string;
-	licence_plate: string;
+	licencePlate: string;
 	owner: string;
 	status: ICardStatus;
 	type: ICardType;
@@ -37,3 +37,9 @@ type InputType =
 	| 'datetime'
 	| 'time'
 	| 'color';
+
+type Nullable<T> = T | null;
+
+type WithOptional<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
+
+type UpdateOption<T> = WithOptional<T, 'id'>;

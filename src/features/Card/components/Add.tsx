@@ -27,7 +27,7 @@ export default function AddCard(props: AddCardProps) {
 		<Formik
 			initialValues={{
 				rfid: '',
-				licence_plate: '',
+				licencePlate: '',
 				owner: '',
 				type: '',
 			}}
@@ -38,8 +38,8 @@ export default function AddCard(props: AddCardProps) {
 			validationSchema={validationSchema}
 		>
 			{(formikProp) => {
-				const { errors, values, touched } = formikProp;
-				console.log({ errors, values, touched });
+				// const { errors, values, touched } = formikProp;
+				// console.log({ errors, values, touched });
 				return (
 					<Form>
 						<Row>
@@ -52,7 +52,7 @@ export default function AddCard(props: AddCardProps) {
 							placeholder="249-85-64-178"
 						/>
 						<FastField
-							name="licence_plate"
+							name="licencePlate"
 							component={InputField}
 							label="Biển kiểm soát"
 							placeholder="37A123.."

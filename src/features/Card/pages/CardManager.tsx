@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useDispatch, useSelector, connect, ConnectedProps } from 'react-redux';
 import { fetchCard, selectCardData, selectCardError, selectCardLoading } from '../cardSlice';
 import AddCard from '../components/Add';
 import EditCard from '../components/Edit';
 import ListCard from '../components/ListCard';
-const CardManager: React.FC<any> = () => {
+import type { RootState } from '../../../app/store';
+// import type { Dispatch } from 'react-redux';
+const mapStateToProps = (state: RootState) => {
+	return {
+		cards: selectCardData(state),
+		loading: selectCardLoading(state),
+		error: selectCardError(state),
+	};
+};
+const connector = connect(mapStateToProps);
+type CardManagerProps = ConnectedProps<typeof connector>;
+const CardManager: React.FC<CardManagerProps> = (props) => {
 	const dispatch = useDispatch();
+	const { cards, loading, error } = props;
 	const [isAdd, setAdd] = useState(true);
 	const [editingID, setEditingID] = useState(-1);
-	// const [cards, setCards] = useState<ICardDetail[]>(CARD_LIST);
-	const cards = useSelector(selectCardData);
-	const loading = useSelector(selectCardLoading);
-	const error = useSelector(selectCardError);
 	useEffect(() => {
 		dispatch(fetchCard());
 		return () => {};
@@ -26,7 +34,7 @@ const CardManager: React.FC<any> = () => {
 	if (loading === 'error') return <div>Error: {error}</div>;
 	return (
 		<div>
-			<Container>
+			<Container fluid>
 				<Row>
 					<Col xs={{ size: isAdd || editingID >= 0 ? '8' : '12' }}>
 						<Button onClick={() => setAdd(!isAdd)}>Thêm</Button>
@@ -48,4 +56,4 @@ const CardManager: React.FC<any> = () => {
 		</div>
 	);
 };
-export default connect()(CardManager);
+export default connector(CardManager);

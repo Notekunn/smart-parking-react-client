@@ -4,6 +4,8 @@ import { Row, Button, Alert, ButtonGroup } from 'reactstrap';
 import InputField from '../../../custom-fields/InputField';
 import SelectField from '../../../custom-fields/SelectField';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCardEditLoading, selectCardError, updateCard } from '../cardSlice';
 export interface EditCardProps {
 	cancerEdit: () => any;
 	card: ICardDetail;
@@ -23,35 +25,45 @@ const validationSchema = yup.object({
 		.required('Vui lòng chọn loại thẻ'),
 });
 const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
+	const dispatch = useDispatch();
+	const error = useSelector(selectCardError);
+	const editLoading = useSelector(selectCardEditLoading);
 	const { card, cancerEdit } = props;
-	const { licence_plate, rfid, owner, status, type } = card;
+	const { licencePlate, rfid, owner, status, type } = card;
 	const [isActive, setActive] = useState(status !== 'PENDING');
 	const handleActiveCard = () => {
 		setActive(true);
 		console.log('Active card');
 	};
+	if (editLoading === 'pending') return <div>Editing..</div>;
 	return (
 		<Formik
 			initialValues={{
 				rfid,
-				licence_plate,
+				licencePlate,
 				owner,
 				type,
 			}}
 			onSubmit={(values, actions) => {
-				console.log(values);
+				dispatch(
+					updateCard({
+						...values,
+						id: card.id,
+					})
+				);
+				actions.resetForm();
 			}}
 			validationSchema={validationSchema}
 		>
 			{(formikProp) => {
-				const { errors, values, touched } = formikProp;
-				console.log({ errors, values, touched });
+				// const { errors, values, touched } = formikProp;
 				return (
 					<Form>
 						<Row>
 							<h4 className="m-auto"> Sửa thẻ </h4>
 						</Row>
-						{!isActive && <Alert color="danger">Thẻ chưa kích hoạt</Alert>}
+						{editLoading === 'error' && <Alert color="danger">{error}</Alert>}
+						{!isActive && <Alert color="primary">Thẻ chưa kích hoạt</Alert>}
 						<FastField
 							name="rfid"
 							component={InputField}
@@ -59,18 +71,8 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 							placeholder="249-85-64-178"
 							disabled={true}
 						/>
-						<FastField
-							name="licence_plate"
-							component={InputField}
-							label="Biển kiểm soát"
-							placeholder="37A123.."
-						/>
-						<FastField
-							name="owner"
-							component={InputField}
-							label="Chủ phương tiện"
-							placeholder="249-85-64-178"
-						/>
+						<FastField name="licencePlate" component={InputField} label="Biển kiểm soát" />
+						<FastField name="owner" component={InputField} label="Chủ phương tiện" />
 						<FastField
 							name="type"
 							component={SelectField}
