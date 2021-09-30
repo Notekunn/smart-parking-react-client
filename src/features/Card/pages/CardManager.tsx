@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
-import { useDispatch, useSelector, connect, ConnectedProps } from 'react-redux';
+import { useDispatch, connect, ConnectedProps } from 'react-redux';
 import { fetchCard, selectCardData, selectCardError, selectCardLoading } from '../cardSlice';
 import AddCard from '../components/Add';
 import EditCard from '../components/Edit';

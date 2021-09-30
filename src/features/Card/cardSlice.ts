@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as cardService from '../../services/card';
 import type { RootState } from '../../app/store';
-import _ from 'lodash';
 interface CardState {
 	loading: 'idle' | 'pending' | 'success' | 'error';
 	editLoading: 'idle' | 'pending' | 'success' | 'error';
 	error?: string;
 	data: ICardDetail[];
 }
-export const fetchCard = createAsyncThunk('card/fetch', async (_, thunk) => {
+export const fetchCard = createAsyncThunk('card/fetch', async () => {
 	const cards = await cardService.fetchCard();
 	return cards;
 });
@@ -66,7 +65,7 @@ const cardSlice = createSlice({
 });
 
 // Export actions
-export const {} = cardSlice.actions;
+// export const {} = cardSlice.actions;
 
 // Export selector
 export const selectCardData = (state: RootState) => state.card.data;

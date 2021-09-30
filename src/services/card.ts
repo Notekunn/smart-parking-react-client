@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import { fetchAllAdapter, fetchOneAdapter } from './apiAdapter';
 import axiosClient from './axiosClient';
 

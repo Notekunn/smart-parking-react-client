@@ -1,5 +1,5 @@
 import { Formik, Form, FastField } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Button, Alert, ButtonGroup } from 'reactstrap';
 import InputField from '../../../custom-fields/InputField';
 import SelectField from '../../../custom-fields/SelectField';
