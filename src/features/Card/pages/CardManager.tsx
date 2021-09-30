@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import { fetchCard, selectCardData, selectCardError, selectCardLoading } from '../cardSlice';
 import AddCard from '../components/Add';
 import EditCard from '../components/Edit';
 import ListCard from '../components/ListCard';
-export default function CardManager() {
+const CardManager: React.FC<any> = () => {
 	const dispatch = useDispatch();
 	const [isAdd, setAdd] = useState(true);
 	const [editingID, setEditingID] = useState(-1);
@@ -47,4 +47,5 @@ export default function CardManager() {
 			</Container>
 		</div>
 	);
-}
+};
+export default connect()(CardManager);

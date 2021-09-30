@@ -3,11 +3,14 @@ import React from 'react';
 import { Button, ButtonGroup, Table } from 'reactstrap';
 import CardStatus from './CardStatus';
 import CardType from './CardType';
+import { useDispatch } from 'react-redux';
+import { deleteCard } from '../cardSlice';
 export interface ListCardProps {
 	cards: ICardDetail[];
 	setEdit: (id: number) => void;
 }
 export default function ListCard(props: ListCardProps) {
+	const dispatch = useDispatch();
 	const { cards, setEdit } = props;
 	if (cards.length === 0) return <div>Chưa có thẻ nào</div>;
 	return (
@@ -39,7 +42,7 @@ export default function ListCard(props: ListCardProps) {
 								<Button outline color="secondary" onClick={() => setEdit(i)}>
 									Sửa
 								</Button>
-								<Button outline color="danger">
+								<Button outline color="danger" onClick={() => dispatch(deleteCard(e.id))}>
 									Xóa
 								</Button>
 							</ButtonGroup>
