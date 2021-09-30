@@ -1,36 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCard, selectCardData, selectCardError, selectCardLoading } from '../cardSlice';
 import AddCard from '../components/Add';
 import EditCard from '../components/Edit';
 import ListCard from '../components/ListCard';
-const CARD_LIST: ICardDetail[] = [
-	{
-		id: 1,
-		licence_plate: '37A1-123-253-223-53',
-		owner: '',
-		rfid: '231-123-123-213',
-		status: 'OUT',
-		type: 'DATE',
-	},
-	{
-		id: 2,
-		licence_plate: '37A1-123-253-223-53',
-		owner: '',
-		rfid: '231-123-123-215',
-		status: 'PENDING',
-		type: 'DATE',
-	},
-];
 export default function CardManager() {
+	const dispatch = useDispatch();
 	const [isAdd, setAdd] = useState(true);
 	const [editingID, setEditingID] = useState(-1);
-	const [cards, setCards] = useState<ICardDetail[]>(CARD_LIST);
+	// const [cards, setCards] = useState<ICardDetail[]>(CARD_LIST);
+	const cards = useSelector(selectCardData);
+	const loading = useSelector(selectCardLoading);
+	const error = useSelector(selectCardError);
+	useEffect(() => {
+		dispatch(fetchCard());
+		return () => {};
+	}, [dispatch]);
 	const toggleEdit = (id: number) => {
 		if (isAdd) return;
 		if (editingID !== -1) return;
 		setEditingID(id);
 	};
-
+	if (loading === 'pending') return <div>Loading...</div>;
+	if (loading === 'error') return <div>Error: {error}</div>;
 	return (
 		<div>
 			<Container>
