@@ -9,9 +9,12 @@ function NavBarCustom() {
 				<NavbarBrand>
 					<Link to="/">Trang chủ</Link>
 				</NavbarBrand>
-				<Nav className="mr-auto" navbar>
+				<Nav className="mr-auto">
 					<NavItem>
-						<Link to="/card">Quản lý thẻ</Link>
+						<Link to="/card">Quản lý thẻ </Link>
+					</NavItem>
+					<NavItem>
+						<Link to="/history">Lịch sử vào ra </Link>
 					</NavItem>
 				</Nav>
 			</Navbar>

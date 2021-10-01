@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Row } from 'reactstrap'
-import { useDispatch, connect, ConnectedProps } from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 import { fetchCard, selectCardData, selectCardError, selectCardLoading } from '../cardSlice'
 import AddCard from '../components/Add'
 import EditCard from '../components/Edit'
@@ -39,7 +39,7 @@ const CardManager: React.FC<CardManagerProps> = (props) => {
 	if (loading === 'error') return <div>Error: {error}</div>
 	return (
 		<div>
-			<Container fluid>
+			<Container>
 				<Row>
 					<Col xs={{ size: isAdd || editingID >= 0 ? '8' : '12' }}>
 						<Button onClick={() => setAdd(!isAdd)}>Thêm</Button>

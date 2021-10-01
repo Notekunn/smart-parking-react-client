@@ -11,6 +11,19 @@ interface ICardDetail {
 	status: ICardStatus
 	type: ICardType
 }
+
+interface IParkingDetail {
+	id: number
+	status: 'FREE' | 'INSERVING' | 'SERVING'
+	name: string
+}
+interface IHistoryDetail {
+	id: number
+	card: ICardDetail
+	parking: IParkingDetail
+	timeIn: string
+	timeOut: string
+}
 type InputType =
 	| 'text'
 	| 'email'
