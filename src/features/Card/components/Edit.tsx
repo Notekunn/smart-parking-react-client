@@ -1,20 +1,20 @@
-import { Formik, Form, FastField } from 'formik';
-import React from 'react';
-import { Row, Button, Alert, ButtonGroup } from 'reactstrap';
-import InputField from '../../../custom-fields/InputField';
-import SelectField from '../../../custom-fields/SelectField';
-import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCardEditLoading, selectCardError, updateCard } from '../cardSlice';
+import { Formik, Form, FastField } from 'formik'
+import React from 'react'
+import { Row, Button, Alert, ButtonGroup } from 'reactstrap'
+import InputField from '../../../custom-fields/InputField'
+import SelectField from '../../../custom-fields/SelectField'
+import * as yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCardEditLoading, selectCardError, updateCard } from '../cardSlice'
 export interface EditCardProps {
-	cancerEdit: () => any;
-	card: ICardDetail;
+	cancerEdit: () => any
+	card: ICardDetail
 }
 const CARD_OPTIONS = [
 	{ value: 'DATE', label: 'Thẻ ngày' },
 	{ value: 'MONTH', label: 'Thẻ tháng' },
 	{ value: 'MASTER', label: 'Thẻ admin' },
-];
+]
 const validationSchema = yup.object({
 	rfid: yup.string().required('Thẻ RFID không hợp lệ'),
 	licence_plate: yup.string().default('').nullable(),
@@ -23,18 +23,18 @@ const validationSchema = yup.object({
 		.string()
 		.oneOf(['DATE', 'MONTH', 'YEAR'], 'Loại thẻ không đúng')
 		.required('Vui lòng chọn loại thẻ'),
-});
+})
 const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
-	const dispatch = useDispatch();
-	const error = useSelector(selectCardError);
-	const editLoading = useSelector(selectCardEditLoading);
-	const { card, cancerEdit } = props;
-	const { id, licencePlate, rfid, owner, status, type } = card;
+	const dispatch = useDispatch()
+	const error = useSelector(selectCardError)
+	const editLoading = useSelector(selectCardEditLoading)
+	const { card, cancerEdit } = props
+	const { id, licencePlate, rfid, owner, status, type } = card
 	const handleActiveCard = () => {
-		if (status !== 'PENDING') return;
-		dispatch(updateCard({ id, status: 'OUT' }));
-	};
-	if (editLoading === 'pending') return <div>Editing..</div>;
+		if (status !== 'PENDING') return
+		dispatch(updateCard({ id, status: 'OUT' }))
+	}
+	if (editLoading === 'pending') return <div>Editing..</div>
 	return (
 		<Formik
 			initialValues={{
@@ -49,9 +49,9 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 						...values,
 						id,
 					})
-				);
-				actions.resetForm();
-				cancerEdit();
+				)
+				actions.resetForm()
+				cancerEdit()
 			}}
 			validationSchema={validationSchema}
 		>
@@ -71,7 +71,11 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 							placeholder="249-85-64-178"
 							disabled={true}
 						/>
-						<FastField name="licencePlate" component={InputField} label="Biển kiểm soát" />
+						<FastField
+							name="licencePlate"
+							component={InputField}
+							label="Biển kiểm soát"
+						/>
 						<FastField name="owner" component={InputField} label="Chủ phương tiện" />
 						<FastField
 							name="type"
@@ -86,7 +90,11 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 									Lưu
 								</Button>
 								{status === 'PENDING' && (
-									<Button type="button" color="success" onClick={handleActiveCard}>
+									<Button
+										type="button"
+										color="success"
+										onClick={handleActiveCard}
+									>
 										Kích hoạt
 									</Button>
 								)}
@@ -96,9 +104,9 @@ const EditCard: React.FC<EditCardProps> = (props: EditCardProps) => {
 							</ButtonGroup>
 						</div>
 					</Form>
-				);
+				)
 			}}
 		</Formik>
-	);
-};
-export default EditCard;
+	)
+}
+export default EditCard

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, Navbar, NavbarBrand, NavItem } from 'reactstrap';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Nav, Navbar, NavbarBrand, NavItem } from 'reactstrap'
 
 function NavBarCustom() {
 	return (
@@ -16,7 +16,7 @@ function NavBarCustom() {
 				</Nav>
 			</Navbar>
 		</div>
-	);
+	)
 }
 
-export default NavBarCustom;
+export default NavBarCustom

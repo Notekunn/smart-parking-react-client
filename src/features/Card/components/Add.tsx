@@ -1,17 +1,17 @@
-import { Formik, Form, FastField } from 'formik';
-import React from 'react';
-import { Row, Button, ButtonGroup } from 'reactstrap';
-import InputField from '../../../custom-fields/InputField';
-import SelectField from '../../../custom-fields/SelectField';
-import * as yup from 'yup';
+import { Formik, Form, FastField } from 'formik'
+import React from 'react'
+import { Row, Button, ButtonGroup } from 'reactstrap'
+import InputField from '../../../custom-fields/InputField'
+import SelectField from '../../../custom-fields/SelectField'
+import * as yup from 'yup'
 export interface AddCardProps {
-	cancerAdd: () => any;
+	cancerAdd: () => any
 }
 const CARD_OPTIONS = [
 	{ value: 'DATE', label: 'Thẻ ngày' },
 	{ value: 'MONTH', label: 'Thẻ tháng' },
 	{ value: 'MASTER', label: 'Thẻ admin' },
-];
+]
 const validationSchema = yup.object({
 	rfid: yup.string().required('Thẻ RFID không hợp lệ'),
 	licence_plate: yup.string().default('').nullable(),
@@ -20,9 +20,9 @@ const validationSchema = yup.object({
 		.string()
 		.oneOf(['DATE', 'MONTH', 'YEAR'], 'Loại thẻ không đúng')
 		.required('Vui lòng chọn loại thẻ'),
-});
+})
 export default function AddCard(props: AddCardProps) {
-	const { cancerAdd } = props;
+	const { cancerAdd } = props
 	return (
 		<Formik
 			initialValues={{
@@ -32,8 +32,8 @@ export default function AddCard(props: AddCardProps) {
 				type: '',
 			}}
 			onSubmit={(values, actions) => {
-				console.log(values);
-				actions.resetForm();
+				console.log(values)
+				actions.resetForm()
 			}}
 			validationSchema={validationSchema}
 		>
@@ -81,8 +81,8 @@ export default function AddCard(props: AddCardProps) {
 							</ButtonGroup>
 						</div>
 					</Form>
-				);
+				)
 			}}
 		</Formik>
-	);
+	)
 }

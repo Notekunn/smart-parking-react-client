@@ -1,36 +1,36 @@
-import { ErrorMessage } from 'formik';
-import React from 'react';
-import Select from 'react-select';
-import { FormFeedback, FormGroup, Label } from 'reactstrap';
+import { ErrorMessage } from 'formik'
+import React from 'react'
+import Select from 'react-select'
+import { FormFeedback, FormGroup, Label } from 'reactstrap'
 export interface SelectFieldProps {
-	field: any;
-	form: any;
-	label?: string;
-	placeholder?: string;
-	disabled?: boolean;
-	options: IOption[];
+	field: any
+	form: any
+	label?: string
+	placeholder?: string
+	disabled?: boolean
+	options: IOption[]
 }
 interface IOption {
-	value: any;
+	value: any
 }
 const SelectField: React.FC<SelectFieldProps> = (props: SelectFieldProps) => {
-	const { field, options, label, form, placeholder, disabled } = props;
-	const { name, value } = field;
-	const { errors, touched } = form;
-	const showError = errors[name] && touched[name];
-	const selectedOption = options.find((option) => option.value === value);
+	const { field, options, label, form, placeholder, disabled } = props
+	const { name, value } = field
+	const { errors, touched } = form
+	const showError = errors[name] && touched[name]
+	const selectedOption = options.find((option) => option.value === value)
 
 	const handleSelectedOptionChange = (selectedOption: IOption) => {
-		const selectedValue = selectedOption ? selectedOption.value : '';
+		const selectedValue = selectedOption ? selectedOption.value : ''
 
 		const changeEvent = {
 			target: {
 				name: name,
 				value: selectedValue,
 			},
-		};
-		field.onChange(changeEvent);
-	};
+		}
+		field.onChange(changeEvent)
+	}
 
 	return (
 		<FormGroup>
@@ -47,13 +47,13 @@ const SelectField: React.FC<SelectFieldProps> = (props: SelectFieldProps) => {
 			/>
 			<ErrorMessage name={name} component={FormFeedback} />
 		</FormGroup>
-	);
-};
-export default SelectField;
+	)
+}
+export default SelectField
 
 SelectField.defaultProps = {
 	label: '',
 	placeholder: '',
 	disabled: false,
 	// options: [],
-};
+}
