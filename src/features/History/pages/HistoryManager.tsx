@@ -28,9 +28,14 @@ const HistoryManager: React.FC<HistoryManagerProps> = (props) => {
 	const { error, loading, history, fetchAll } = props
 	useEffect(() => {
 		fetchAll()
+		const interval = setInterval(fetchAll, 500)
+		return () => {
+			clearInterval(interval)
+		}
 	}, [fetchAll])
-	if (loading === 'pending') return <div>Loading...</div>
+	// if (loading === 'pending') return <div>Loading...</div>
 	if (loading === 'error') return <div>Error: {error}</div>
+	// if (loading === 'success')
 	return (
 		<div>
 			<Container>

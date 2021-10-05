@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Table } from 'reactstrap'
 import { dateFormat } from '../../../services/date'
 export interface ListHistoryProps {
 	history: IHistoryDetail[]
 }
-const ListHistory: React.FC<ListHistoryProps> = (props) => {
+const ListHistory: React.FC<ListHistoryProps> = memo((props: ListHistoryProps) => {
 	const { history } = props
+	console.log('Rerender')
 	return (
 		<div>
 			<Table bordered>
@@ -22,7 +23,10 @@ const ListHistory: React.FC<ListHistoryProps> = (props) => {
 					{history.map((e) => (
 						<tr key={e.id}>
 							<td>{e.id}</td>
-							<td>{e.card.rfid}</td>
+							<td>
+								{e.card.licencePlate || e.card.rfid}
+								(#{e.card.id})
+							</td>
 							<td>{e.parking.name}</td>
 							<td>{dateFormat(e.timeIn)}</td>
 							<td>{e.timeOut && dateFormat(e.timeOut)}</td>
@@ -32,6 +36,6 @@ const ListHistory: React.FC<ListHistoryProps> = (props) => {
 			</Table>
 		</div>
 	)
-}
+})
 
 export default ListHistory

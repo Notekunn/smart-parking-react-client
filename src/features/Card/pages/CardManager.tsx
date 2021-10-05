@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Row } from 'reactstrap'
+import { Button, ButtonGroup, Col, Container, Row } from 'reactstrap'
 import { connect, ConnectedProps } from 'react-redux'
 import { fetchCard, selectCardData, selectCardError, selectCardLoading } from '../cardSlice'
 import AddCard from '../components/Add'
@@ -41,8 +41,15 @@ const CardManager: React.FC<CardManagerProps> = (props) => {
 		<div>
 			<Container>
 				<Row>
+					<Col xs="12">
+						<ButtonGroup>
+							<Button onClick={() => setAdd(!isAdd)}>Thêm</Button>
+							<Button color="success" onClick={() => fetchAll()}>
+								Cập nhật
+							</Button>
+						</ButtonGroup>
+					</Col>
 					<Col xs={{ size: isAdd || editingID >= 0 ? '8' : '12' }}>
-						<Button onClick={() => setAdd(!isAdd)}>Thêm</Button>
 						<ListCard cards={cards} setEdit={toggleEdit} />
 					</Col>
 					{(isAdd || editingID >= 0) && (
